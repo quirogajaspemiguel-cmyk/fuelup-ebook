@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUTRITEENS - Mitos y Realidades de la Nutrición Deportiva Adolescente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000, #1a1a1a);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .ebook-container {
+            width: 100%;
+            max-width: 900px;
+            background: #0f0f0f;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #ffd700;
+        }
+
+        .ebook-pages {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+            height: 600px;
+            position: relative;
+        }
+
+        .page {
+            min-width: 100%;
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .page-content {
+            max-width: 85%;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* PORTADA */
+        .cover {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: 1;
+        }
+
+        .cover h1 {
+            font-size: 56px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 10px rgba(255,215,0,0.8), 0 0 20px rgba(255,215,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .cover h1 span {
+            color: #2ecc71;
+            position: relative;
+        }
+
+        .cover h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #2ecc71;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .cover:hover h1 span::after {
+            transform: scaleX(1);
+        }
+
+        .cover p {
+            font-size: 22px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            line-height: 1.5;
+            color: #ddd;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cover .subtitle {
+            background: #2ecc71;
+            color: black;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        .author {
+            position: absolute;
+            bottom: 20px;
+            font-size: 14px;
+            color: #aaa;
+            z-index: 2;
+        }
+
+        /* ÍNDICE */
+        .index {
+            background: linear-gradient(to right, #0f0f0f, #1a1a1a);
+        }
+
+        .index h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffd700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .index h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #ffd700;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .index:hover h2::after {
+            transform: scaleX(1);
+        }
+
+        .index p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #eee;
+        }
+
+        .index strong {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .table-of-contents {
+            background: rgba(30, 30, 30, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .table-of-contents table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #ddd;
+        }
+
+        .table-of-contents th, .table-of-contents td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .table-of-contents th {
+            background: #2ecc71;
+            color: black;
+            font-weight: bold;
+        }
+
+        .table-of-contents tr:nth-child(even) {
+            background: rgba(46, 204, 113, 0.05);
+        }
+
+        .table-of-contents tr:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        /* PÁGINAS GENERALES */
+        .section {
+            background: linear-gradient(to right, #1a1a1a, #0f0f0f);
+        }
+
+        .section h2 {
+            color: #ffd700;
+            font-size: 36px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #2ecc71;
+            border-radius: 2px;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .section strong {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .section em {
+            color: #2ecc71;
+            font-style: italic;
+        }
+
+        .section ul, .section ol {
+            margin: 15px 0 15px 20px;
+            padding: 0;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+            color: #ddd;
+            position: relative;
+        }
+
+        .section li:before {
+            content: '•';
+            color: #2ecc71;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section th, .section td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+
+        .section th {
+            background: #2ecc71;
+            color: black;
+            font-weight: bold;
+        }
+
+        .section tr:nth-child(even) {
+            background: rgba(46, 204, 113, 0.05);
+        }
+
+        .section tr:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .highlight {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .myth {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .reality {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        /* CONTROLES DE NAVEGACIÓN */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: #1a1a1a;
+            border-top: 1px solid #333;
+        }
+
+        .nav-btn {
+            background: #2ecc71;
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn i {
+            font-size: 16px;
+        }
+
+        .page-indicator {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #ffd700;
+            font-size: 16px;
+        }
+
+        /* ESTILOS PARA IMPRESIÓN */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .ebook-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+                border: none;
+            }
+            
+            .navigation {
+                display: none;
+            }
+            
+            .ebook-pages {
+                height: auto;
+            }
+            
+            .page {
+                page-break-after: always;
+                height: auto;
+                background: white !important;
+                color: black !important;
+            }
+            
+            .cover, .back-cover {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .page-content {
+                color: black !important;
+            }
+            
+            .nav-btn, .page-indicator {
+                display: none;
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .page {
+                padding: 25px 15px;
+            }
+            
+            .page-content {
+                max-width: 95%;
+            }
+            
+            .cover h1 {
+                font-size: 36px;
+            }
+            
+            .table-of-contents table {
+                font-size: 14px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .page-indicator {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ebook-container">
+        <div class="ebook-pages" id="ebookPages">
+            <!-- PÁGINA 1: PORTADA -->
+            <div class="page cover">
+                <div class="page-content">
+                    <h1>FUEL <span>UP</span></h1>
+                    <p>Nutrición inteligente diseñada especialmente para jóvenes deportistas que buscan rendir al máximo.</p>
+                    <div class="subtitle">Para atletas que no se conforman con lo básico</div>
+                    <div class="author">Basado en las enseñanzas del Prof. Gerardo Calero</div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 2: ÍNDICE -->
+            <div class="page index">
+                <div class="page-content">
+                    <h2>ÍNDICE</h2>
+                    <p><strong>¡Saber la verdad te ayuda a rendir más!</strong></p>
+                    <p><em>En Nutriteens, sabemos que en la nutrición deportiva hay mucha información, pero no toda es cierta. Este ebook desmentirá algunos de los mitos más comunes entre los atletas adolescentes, brindándote la ciencia real de forma clara y práctica. Aprender a comer bien te ayuda a estar fuerte, concentrado y a darlo todo en el deporte.</em></p>
+
+                    <div class="table-of-contents">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>PÁGINA</th>
+                                    <th>TEMA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>2</td><td>La Gasolina del Cuerpo: ¿Por Qué la Nutrición Importa a tu Edad?</td></tr>
+                                <tr><td>3</td><td>MITO 1 Desmentido: La Energía Instantánea (El Error de Calero)</td></tr>
+                                <tr><td>4</td><td>MITO 2 Desmentido: La Falsa Necesidad de Ponerse a Dieta</td></tr>
+                                <tr><td>5</td><td>MITO 3 Desmentido: La Promesa Engañosa de los Suplementos</td></tr>
+                                <tr><td>6</td><td>MITO 4 Desmentido: Azúcares, Grasas y la Señal de la Sed</td></tr>
+                                <tr><td>7</td><td>Los Fundamentos Reales: Macronutrientes y sus Roles</td></tr>
+                                <tr><td>8</td><td>Realidad: Hidratación Clave y Huesos de Atleta (Calcio y Hierro)</td></tr>
+                                <tr><td>9</td><td>Nutrición para la Competición y Consejos del Experto</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 3: LA GASOLINA DEL CUERPO -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>La Gasolina del Cuerpo: ¿Por Qué la Nutrición Importa a tu Edad?</h2>
+                    <p>A nuestra edad, el cuerpo está experimentando cambios y crecemos más rápido, por lo que necesitamos más energía. <strong>La comida es como la “gasolina”</strong> que nos permite estar fuertes, concentrados y rendir al máximo en los entrenamientos y en la vida diaria.</p>
+                    
+                    <h3>Necesidades Únicas del Atleta Adolescente</h3>
+                    <p>Los deportistas adolescentes tienen necesidades nutricionales distintas a las de los menos activos. Dado que entrenan mucho más, requieren más calorías como combustible, tanto para el rendimiento deportivo como para el proceso continuo de crecimiento.</p>
+                    <p>Si un deportista no ingiere suficientes calorías, su cuerpo tiene menos probabilidades de rendir al máximo, puede volverse menos rápido o fuerte, y hasta corre el riesgo de sufrir lesiones musculares en lugar de favorecer su desarrollo. La fatiga, el bajo rendimiento, las defensas bajas y más lesiones son consecuencias de no comer bien.</p>
+                    
+                    <h3>Conceptos Clave (NUTRITEENS)</h3>
+                    <p>Entender los nutrientes es el primer paso para rendir al máximo.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MACRONUTRIENTES (Grandes cantidades)</th>
+                                <th>FUNCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Carbohidratos</strong></td>
+                                <td>Principal fuente de energía. (Ej: arroz, pasta, frutas).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proteínas</strong></td>
+                                <td>Esenciales para la reparación y el crecimiento muscular. (Ej: carne, huevos, legumbres).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grasas</strong></td>
+                                <td>Importantes para la salud hormonal y la absorción de vitaminas. (Ej: aguacate, aceite de oliva).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MICRONUTRIENTES (Pequeñas cantidades)</th>
+                                <th>FUNCIÓN (Superpoderes invisibles)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Calcio</strong></td>
+                                <td>Para huesos y dientes fuertes.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hierro</strong></td>
+                                <td>Proporciona energía para no cansarse.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vitamina C</strong></td>
+                                <td>Defensa contra resfriados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>Mantener una dieta variada es clave para obtener todos estos nutrientes.</p>
+                </div>
+            </div>
+
+            <!-- PÁGINA 4: MITO 1 DESMENTIDO -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>MITO 1 Desmentido: La Energía Instantánea (El Error de Calero)</h2>
+                    
+                    <h3>El Verdadero Origen de tu Combustible</h3>
+                    <p>El Profesor Gerardo Calero, exfutbolista profesional y entrenador con más de 15 años de experiencia (presentado en NUTRITEENS), enfatiza que el error más frecuente que observa en jóvenes deportistas es la <strong>falta de conocimiento e interés en la nutrición e hidratación</strong> a temprana edad.</p>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> La energía que utilizarás en un entrenamiento o partido proviene únicamente de lo que comiste justo antes del evento deportivo.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> El Profesor Calero desmiente esta creencia común, explicando que la energía que usamos en la actividad física proviene de los alimentos que consumimos ¡hasta tres días antes!
+                    </div>
+                    
+                    <p><em>Dato clave:</em> Este punto subraya la importancia de una <strong>ingesta nutricional constante y equilibrada</strong> y no solo depender de la comida de último momento.</p>
+                    
+                    <h3>Desmontando el Plátano (Banana) Post-Entrenamiento</h3>
+                    <p>Otro mito persistente en la nutrición deportiva, según el Profesor Calero, es el <strong>plátano</strong>.</p>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> El plátano es la fuente superior e insustituible de potasio que todo atleta necesita.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> Si bien el plátano posee potasio, el Profesor Calero afirma que <strong>existen muchísimos otros alimentos</strong> con una cantidad superior de potasio y de otros nutrientes y que están al alcance de todos los bolsillos. Además, advierte que el plátano también contiene mucha azúcar.
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 5: MITO 2 DESMENTIDO -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>MITO 2 Desmentido: La Falsa Necesidad de Ponerse a Dieta</h2>
+                    
+                    <h3>El Peligro de Restringir Calorías</h3>
+                    <p>Puesto que los adolescentes que hacen deporte necesitan más combustible, <strong>ponerse a dieta drásticamente no suele ser una buena idea</strong>.</p>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Si quiero ganar músculo o mejorar mi rendimiento, debo reducir drásticamente mi ingesta calórica o seguir dietas bajas en carbohidratos.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> Reducir drásticamente las calorías puede generar <strong>problemas de crecimiento</strong> y un <strong>mayor riesgo de fracturas y otros tipos de lesiones</strong>. Reducir el consumo de hidratos de carbono puede hacer que la persona se sienta cansada y agotada, lo que afecta negativamente el rendimiento deportivo.
+                    </div>
+                    
+                    <p><em>Si tu entrenador o compañero afirma que necesitas ponerte a dieta, habla antes con tu médico o bien visita a un dietista especializado en la adolescencia y el deporte.</em></p>
+                    
+                    <h3>La Verdad sobre las Proteínas</h3>
+                    <p>La proteína es vital para construir y reparar el músculo. Sin embargo, la mayoría de los deportistas obtienen una cantidad suficiente de proteínas a través de una dieta saludable.</p>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Los deportistas necesitan ingerir una cantidad <strong>considerable</strong> de proteínas cada día para desarrollar una musculatura fuerte y resistente.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> La afirmación anterior es un mito. <strong>El desarrollo muscular se consigue con un entrenamiento regular y trabajando duro</strong>, no con un consumo excesivo de proteínas.
+                    </div>
+                    
+                    <p><em>Ojo con el exceso:</em> Un suplemento de proteínas en dosis altas puede causar hinchazón, retortijones, diarrea, falta de apetito y cansancio. La mayoría de los médicos consideran que es mejor que los adolescentes obtengan sus proteínas a partir de la dieta.</p>
+                </div>
+            </div>
+
+            <!-- PÁGINA 6: MITO 3 DESMENTIDO -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>MITO 3 Desmentido: La Promesa Engañosa de los Suplementos</h2>
+                    
+                    <p>Los suplementos deportivos se venden prometiendo mejorar el rendimiento físico.</p>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Los suplementos son la clave para maximizar el rendimiento y son seguros para adolescentes.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> Hay muy pocos suplementos que se sepa que realmente ayudan, y <strong>algunos hasta pueden ser perjudiciales</strong>. Es difícil saber si los suplementos son seguros para adolescentes porque no se han realizado estudios a largo plazo en esta población.
+                    </div>
+                    
+                    <h3>Suplementos Específicos: Riesgos</h3>
+                    <ol>
+                        <li><strong>Creatina:</strong> Aunque puede ayudar en ejercicios de alta intensidad y corta duración (como carreras cortas), no se ha evaluado en menores de 18 años. Los riesgos se desconocen, y algunas investigaciones sugieren que puede dañar los riñones. Los médicos generalmente recomiendan su uso solo a deportistas mayores de 18 años.</li>
+                        <li><strong>Cafeína y Bebidas Energéticas:</strong> Hay pruebas limitadas de que la cafeína pueda mejorar el rendimiento. Sin embargo, un exceso de cafeína puede aumentar la frecuencia cardíaca y la tensión arterial, causando ansiedad o inquietud, dolores de cabeza y problemas para dormir. ¡Es mejor evitar la cafeína para rehidratarse!</li>
+                        <li><strong>Pastillas de Sal:</strong> Aunque la gente las toma para evitar la deshidratación, <strong>de hecho pueden favorecer el proceso de deshidratación</strong> si no se toman con abundante agua. Grandes cantidades pueden causar náuseas, vómitos y retortijones, y alterar el recubrimiento interior del estómago.</li>
+                        <li><strong>Esteroides Anabolizantes:</strong> Estos afectan muy negativamente las hormonas, causando efectos secundarios indeseables (como la retracción testicular y calvicie en chicos, y vello facial en chicas). También pueden causar problemas de salud mental como la depresión.</li>
+                    </ol>
+                    
+                    <p><em>Consejo de experto:</em> Para dar lo mejor de ti sin suplementos, simplemente <strong>lleva una dieta saludable, entrena de forma inteligente y duerme mucho</strong>.</p>
+                </div>
+            </div>
+
+            <!-- PÁGINA 7: MITO 4 DESMENTIDO -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>MITO 4 Desmentido: Azúcares, Grasas y la Señal de la Sed</h2>
+                    
+                    <p>Existen mitos comunes sobre qué comer y cuándo comerlo, especialmente antes de un entrenamiento o partido.</p>
+                    
+                    <h3>El Azúcar y el Bajón de Energía</h3>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Los carbohidratos azucarados, como los refrescos, las barras de chocolate o las bebidas energéticas, son el mejor combustible rápido antes de competir.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> Si un deportista ingiere una barra de chocolate u otro tentempié azucarado justo antes de entrenar o de competir, podrá tener un <strong>rápido (aunque breve) aumento en su nivel de energía</strong>, que irá seguido de un <strong>importante "bajón"</strong>, quedándose agotado y sin energía antes de acabar. Además, las bebidas que contienen gas o jugos pueden provocar dolor de estómago. Es mejor elegir hidratos de carbono complejos o simples que contengan nutrientes.
+                    </div>
+                    
+                    <h3>Grasas en la Comida Pre-Competición</h3>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Como las grasas son energía de reserva, debo incluirlas en grandes cantidades en la comida antes del evento para asegurar el combustible.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> Los alimentos grasos pueden <strong>ralentizar la digestión</strong>; por lo tanto, es una buena idea evitar ingerir este tipo de alimentos unas pocas horas antes de hacer ejercicio. Las comidas con alto contenido de grasa deben evitarse antes del ejercicio porque pueden retrasar el vaciamiento gástrico, hacer que los atletas se sientan lentos y afectar negativamente el rendimiento.
+                    </div>
+                    
+                    <h3>Esperar a Sentir Sed</h3>
+                    
+                    <div class="myth">
+                        <strong>¡MITO!</strong> Solo debes beber agua cuando sientes sed, ya que esa es la señal de que tu cuerpo necesita líquidos.
+                    </div>
+                    
+                    <div class="reality">
+                        <strong>¡REALIDAD!</strong> La sed es un signo de que tu cuerpo ya lleva tiempo necesitando beber. Incluso una deshidratación leve puede repercutir negativamente en el rendimiento físico y mental de un deportista. La hidratación adecuada debe ser una estrategia constante, bebiendo antes, durante y después del ejercicio.
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 8: FUNDAMENTOS REALES -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>Los Fundamentos Reales: Macronutrientes y sus Roles</h2>
+                    <p>Una buena nutrición deportiva promueve la <strong>ingesta equilibrada de alimentos</strong>, teniendo en cuenta tus requerimientos energéticos y las particularidades del deporte.</p>
+                    
+                    <h3>1. Recarga de Carbohidratos: El Combustible Ideal</h3>
+                    <p>Los hidratos de carbono son la <strong>principal fuente de energía</strong>. Reducir este grupo de alimentos no es una buena idea, ya que puede causar cansancio y agotamiento.</p>
+                    <ul>
+                        <li><strong>Complejos (Lenta absorción):</strong> Se deben comer 2 a 4 horas antes de un entrenamiento. Se encuentran en granos integrales (como el arroz integral o la avena integral), legumbres, tubérculos y pan elaborado con harinas integrales.</li>
+                        <li><strong>Simples (Rápida absorción):</strong> Se deben elegir 30 a 60 minutos antes del ejercicio. Se encuentran en algunas frutas y galletas saladas tipo <em>cracker</em>.</li>
+                    </ul>
+                    <p><strong>Ingesta Necesaria:</strong> En deportes de intensidad moderada (una hora de ejercicio) se requieren entre 5 y 7 gramos de carbohidratos diarios por kg de peso del deportista.</p>
+                    
+                    <h3>2. La Energía de las Proteínas</h3>
+                    <p>Las proteínas promueven el <strong>crecimiento y la reparación de los tejidos musculares</strong>.</p>
+                    <ul>
+                        <li><strong>Fuentes ricas en proteínas:</strong> Pescado, carne magra, carne de aves de corral, huevos, lácteos, legumbres, frutos secos y mantequilla de cacahuete.</li>
+                        <li><strong>Requerimiento:</strong> Las proteínas deben comprender aproximadamente del 10% al 30% del consumo total de energía para jóvenes de 4 a 18 años.</li>
+                    </ul>
+                    
+                    <h3>3. El Combustible Graso (Grasas Saludables)</h3>
+                    <p>Los músculos queman grasas para disponer de <strong>energía durante más tiempo</strong>. La ingesta de grasas saludables es clave para obtener energía de reserva y mantenerse saciado.</p>
+                    <ul>
+                        <li><strong>Grasas Saludables (No saturadas):</strong> Se encuentran en el aceite de oliva virgen extra, aguacate, pescado, frutos secos y semillas.</li>
+                        <li><strong>Función Antiinflamatoria:</strong> Los ácidos grasos omega-3 tienen una función antiinflamatoria que promueve la recuperación de los tejidos tras el ejercicio.</li>
+                        <li><strong>Requerimiento:</strong> Las grasas deben comprender del 25% al 35% del consumo total de energía para jóvenes de 4 a 18 años.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PÁGINA 9: HIDRATACIÓN Y MICRONUTRIENTES -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>Realidad: Hidratación Clave y Huesos de Atleta (Calcio y Hierro)</h2>
+                    
+                    <h3>Evita la Deshidratación: El Agua es Combustible</h3>
+                    <p>El agua es tan crucial para el rendimiento máximo de un deportista como la comida. La deshidratación, incluso leve, puede afectar negativamente el rendimiento físico y mental.</p>
+                    <ul>
+                        <li><strong>Antes del evento:</strong> Consumir de 400 mL a 600 mL de agua fría 2 a 3 horas antes.</li>
+                        <li><strong>Durante el evento:</strong> Consumir de 150 mL a 300 mL de líquido cada 15 a 20 minutos.</li>
+                        <li><strong>Bebidas Deportivas:</strong> No son mejores que el agua para la hidratación rutinaria. Solo son una buena opción si el ejercicio dura <strong>más de 60 a 90 minutos seguidos</strong> y/o se realiza en un clima muy caluroso, ya que proporcionan carbohidratos y electrolitos.</li>
+                    </ul>
+                    
+                    <h3>Micronutrientes Esenciales para Huesos Fuertes</h3>
+                    <p>Los deportistas necesitan vitaminas y minerales para un rendimiento óptimo.</p>
+                    
+                    <ol>
+                        <li><strong>Calcio:</strong> Ayuda a construir huesos fuertes y resistentes, lo cual es fundamental para protegerte de las fracturas por sobrecarga o estrés.
+                            <ul>
+                                <li><strong>Meta:</strong> Los adolescentes (de 9 a 18 años) deberían consumir alrededor de <strong>1300 mg de calcio por día</strong>.</li>
+                                <li><strong>Fuentes:</strong> Lácteos (leche, yogur, queso), verduras de hoja verde (brócoli, col rizada), y productos de soja.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Hierro:</strong> Es vital porque lleva oxígeno a los músculos. La deficiencia de hierro es común en atletas, especialmente mujeres y corredores de distancia.
+                            <ul>
+                                <li><strong>Meta:</strong> Adolescentes de 14 a 18 años necesitan 11 mg/día (hombres) y 15 mg/día (mujeres).</li>
+                                <li><strong>Fuentes:</strong> Carne magra, pescado, carne de aves de corral, verdura de hoja verde y cereales enriquecidos con hierro.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Vitamina D:</strong> Es necesaria para la salud ósea y para la absorción de calcio. Muchos atletas que entrenan en interiores (ej., patinadores, gimnastas o bailarines) pueden tener deficiencia.
+                            <ul>
+                                <li><strong>Recomendación:</strong> 600 UI/día. Puede considerarse un suplemento de Vitamina D junto con Calcio para mantener los huesos fuertes.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- PÁGINA 10: NUTRICIÓN PARA LA COMPETICIÓN -->
+            <div class="page section">
+                <div class="page-content">
+                    <h2>Nutrición para la Competición y Consejos del Experto</h2>
+                    <p>Tu rendimiento el día del partido o la competición depende, en parte, de lo que has comido en los días y semanas previas.</p>
+                    
+                    <h3>Estrategia de Comida para el Día del Evento</h3>
+                    <p>Céntrate en una dieta <strong>rica en hidratos de carbono, moderada en proteínas y baja en grasas</strong>.</p>
+                    <ul>
+                        <li><strong>3 a 4 horas antes:</strong> Realiza una comida con abundantes hidratos de carbono y algunas proteínas, manteniendo bajas las grasas, ya que tardan más en digerirse y pueden causar molestias digestivas.
+                            <ul>
+                                <li><em>Ejemplos:</em> Pasta con proteína y salsa, o un tazón de burrito con arroz, proteína de elección y vegetales.</li>
+                            </ul>
+                        </li>
+                        <li><strong>3 horas o menos antes (Snack):</strong> Ingiere una comida más ligera o un tentempié que contenga hidratos de carbono fáciles de digerir.
+                            <ul>
+                                <li><em>Ejemplos:</em> Fruta fresca (como manzana o plátano), galletas saladas tipo <em>cracker</em> o tostada con jalea.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Recuperación (Post-partido):</strong> Los expertos recomiendan comer dentro de los <strong>30 minutos posteriores</strong> a la actividad intensa, y nuevamente 1 a 2 horas después.
+                            <ul>
+                                <li>La recuperación repone reservas de energía y reconstruye músculos. Los alimentos deben incluir carbohidratos y proteínas.</li>
+                                <li><em>Sugerencia:</em> Se recomienda una proporción ideal de 3:1 (carbohidratos a proteínas) para la recuperación muscular y reposición de glucógeno. Un batido (<em>smoothie</em>) con yogur y fruta, o leche con chocolate son opciones populares.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>Consejos Finales para la Excelencia Deportiva</h3>
+                    <ol>
+                        <li><strong>Aprende lo que funciona para ti:</strong> Averigua cuál es el mejor momento y cantidad de alimento para tu cuerpo experimentando durante los entrenamientos.</li>
+                        <li><strong>Evita ultraprocesados:</strong> Elige comida real, evitando productos ultraprocesados y cargados de azúcares, grasas saturadas y harinas refinadas.</li>
+                        <li><strong>Descanso y Sueño:</strong> Dormir <strong>8 horas cada día</strong> repercute significativamente en la calidad de tus entrenamientos y resultados.</li>
+                        <li><strong>Hidratación constante:</strong> La rehidratación después del ejercicio ayuda a recuperar la sal perdida mediante el consumo de líquidos que contienen sodio y <em>snacks</em>.</li>
+                    </ol>
+                    
+                    <div class="highlight">
+                        <strong>Nota:</strong> Este material ha sido desarrollado por Nutriteens, utilizando información basada en guías de salud y expertos como el Profesor Gerardo Calero.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" disabled><i class="fas fa-arrow-left"></i> Anterior</button>
+            <div class="page-indicator">
+                Página <span id="currentPage">1</span> de <span id="totalPages">9</span>
+            </div>
+            <button class="nav-btn" id="nextBtn"><i class="fas fa-arrow-right"></i> Siguiente</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ebookPages = document.getElementById('ebookPages');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentPageSpan = document.getElementById('currentPage');
+            const totalPagesSpan = document.getElementById('totalPages');
+            
+            let currentPage = 0;
+            const totalPages = 9;
+            
+            totalPagesSpan.textContent = totalPages;
+            
+            function updateNavigation() {
+                currentPageSpan.textContent = currentPage + 1;
+                
+                // Actualizar estado de los botones
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === totalPages - 1;
+                
+                // Mover las páginas
+                ebookPages.style.transform = `translateX(-${currentPage * 100}%)`;
+                
+                // Aplicar animación a la página actual
+                const pages = document.querySelectorAll('.page');
+                pages.forEach((page, index) => {
+                    if (index === currentPage) {
+                        page.querySelector('.page-content')?.classList.add('fadeIn');
+                    } else {
+                        page.querySelector('.page-content')?.classList.remove('fadeIn');
+                    }
+                });
+            }
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    currentPage--;
+                    updateNavigation();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    updateNavigation();
+                }
+            });
+            
+            // Inicializar navegación
+            updateNavigation();
+            
+            // Agregar funcionalidad de teclado
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && currentPage > 0) {
+                    currentPage--;
+                    updateNavigation();
+                } else if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
+                    currentPage++;
+                    updateNavigation();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
